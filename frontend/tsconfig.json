@@ -27,7 +27,8 @@
       "@/providers/*": ["providers/*"],
       "@/lib/*": ["lib/*"],
       "@/ui/*": ["ui/*"],
-      "@/styles/*": ["styles/*"]
+      "@/styles/*": ["styles/*"],
+      "@/constants/*": ["constants/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
