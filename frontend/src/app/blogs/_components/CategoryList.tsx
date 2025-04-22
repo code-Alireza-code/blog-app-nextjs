@@ -1,0 +1,26 @@
+import { CategoryType } from "@/types/Category";
+import Link from "next/link";
+
+async function CategoryList() {
+  const res = await fetch("http://localhost:5000/api/category/list");
+  const {
+    data: { categories },
+  }: { data: { categories: CategoryType[] } } = await res.json();
+
+  return (
+    <ul className="space-y-4">
+      <li>
+        <Link href="/blogs">همه</Link>
+      </li>
+      {categories.map((category) => (
+        <li key={category._id}>
+          <Link href={`/blogs/category/${category.slug}`}>
+            {category.title}
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+export default CategoryList;
