@@ -52,8 +52,8 @@ export type PostType = {
   category: CategoryType;
   comments: [] | CommentType[];
   commentsCount: number;
-  coverImage?: string;
-  coverImageUrl?: string;
+  coverImage: string;
+  coverImageUrl: string;
   createdAt: string;
   id: string;
   isBookmarked: boolean;
