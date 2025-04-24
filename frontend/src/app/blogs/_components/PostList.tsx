@@ -6,8 +6,6 @@ import Author from "./Author";
 import PostInteraction from "./PostInteraction";
 
 async function PostList() {
-  await new Promise((res) => setTimeout(res, 3000));
-
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post/list`);
   const {
     data: { posts },
