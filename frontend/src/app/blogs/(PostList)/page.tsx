@@ -11,9 +11,11 @@ async function BlogPage() {
         modi dolor. Vero suscipit soluta cumque impedit reiciendis hic ab
         dolorem ut.
       </div>
-      <Suspense fallback={<Spinner />}>
-        <PostList />
-      </Suspense>
+      <div className="flex items-center justify-center">
+        <Suspense fallback={<Spinner />}>
+          <PostList />
+        </Suspense>
+      </div>
     </div>
   );
 }

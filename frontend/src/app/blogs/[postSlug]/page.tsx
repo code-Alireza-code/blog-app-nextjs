@@ -1,5 +1,6 @@
 import { PostType } from "@/types/Post";
 import Image from "next/image";
+import { notFound } from "next/navigation";
 
 type SinglePostProps = {
   params: Promise<{ postSlug: string }>;
@@ -12,9 +13,10 @@ async function SinglePost({ params }: SinglePostProps) {
     `${process.env.NEXT_PUBLIC_API_URL}/post/slug/${postSlug}`
   );
 
-  const {
-    data: { post },
-  }: { data: { post: PostType } } = await res.json();
+  const { data } = await res.json();
+  const { post }: { post: PostType } = data || {};
+
+  if (!post) notFound();
 
   return (
     <div>
