@@ -1,6 +1,18 @@
-import { PostType } from "@/types/Post";
+import { getPostBySlug } from "@/services/postService";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ postSlug: string }>;
+}) {
+  const post = await getPostBySlug((await params).postSlug);
+
+  return {
+    title: `${post.title}`,
+  };
+}
 
 type SinglePostProps = {
   params: Promise<{ postSlug: string }>;
@@ -9,12 +21,7 @@ type SinglePostProps = {
 async function SinglePost({ params }: SinglePostProps) {
   const { postSlug } = await params;
 
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/post/slug/${postSlug}`
-  );
-
-  const { data } = await res.json();
-  const { post }: { post: PostType } = data || {};
+  const post = await getPostBySlug(postSlug);
 
   if (!post) notFound();
 
