@@ -1,6 +1,8 @@
-import { getPostBySlug } from "@/services/postService";
+import { getAllPosts, getPostBySlug } from "@/services/postService";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+
+export const dynamicParams = false;
 
 export async function generateMetadata({
   params,
@@ -12,6 +14,14 @@ export async function generateMetadata({
   return {
     title: `${post.title}`,
   };
+}
+
+export async function generateStaticParams() {
+  const posts = await getAllPosts();
+
+  return posts.map((post) => ({
+    postSlug: post.slug,
+  }));
 }
 
 type SinglePostProps = {
