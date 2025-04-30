@@ -5,9 +5,14 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { useSignup } from "../_hooks/useAuth";
+import { useRouter } from "next/navigation";
 
 const validationSchema = z.object({
-  name: z.string().nonempty("نام اجباری است !"),
+  name: z
+    .string()
+    .nonempty("نام اجباری است !")
+    .min(5, "نام کاربری باید حداقل ۵ حرف باشد‌!"),
   email: z.string().nonempty("ایمیل اجباری است !").email("ایمیل نامعتبر است !"),
   password: z
     .string()
@@ -22,18 +27,28 @@ function Signup() {
     register,
     formState: { errors },
     handleSubmit,
-    reset,
   } = useForm<signUpformDataType>({ resolver: zodResolver(validationSchema) });
 
-  const signUpHandler = (formData: signUpformDataType) => {
-    console.log(formData);
-    reset();
+  const { mutateAsync: signUp, isPending: isSigningUp } = useSignup();
+
+  const router = useRouter();
+
+  const signUpHandler = async (formData: signUpformDataType) => {
+    await signUp(formData, {
+      onSuccess: () => {
+        router.replace("/");
+      },
+    });
   };
 
   return (
     <div className="border-2 p-8 border-secondary-200 text-secondary-700 rounded-lg">
       <h1 className="mb-4 text-center font-bold text-2xl">ثبت نام</h1>
-      <form onSubmit={handleSubmit(signUpHandler)} className="space-y-5">
+      <form
+        onSubmit={handleSubmit(signUpHandler)}
+        className="space-y-5"
+        noValidate
+      >
         <TextField
           errors={errors}
           label="نام و نام خانوادگی"
@@ -50,8 +65,12 @@ function Signup() {
           {...register("password")}
           label="رمز عبور "
         />
-        <button type="submit" className="btn btn--primary w-full">
-          ثبت نام
+        <button
+          disabled={isSigningUp}
+          type="submit"
+          className="btn btn--primary w-full disabled:bg-gray-400 disabled:text-white "
+        >
+          {isSigningUp ? "در حال ارسال اطلاعات" : "ثبت نام"}
         </button>
         <div className="flex justify-center gap-x-1">
           <span>قبلا ثبت نام کرده اید؟ </span>
