@@ -1,5 +1,6 @@
-import { HTMLInputTypeAttribute, InputHTMLAttributes } from "react";
+import { HTMLInputTypeAttribute, InputHTMLAttributes, useState } from "react";
 import { FieldErrors, FieldValues } from "react-hook-form";
+import { LuEye, LuEyeClosed } from "react-icons/lu";
 
 type TextFieldProps<T extends FieldValues> = {
   type?: HTMLInputTypeAttribute;
@@ -22,13 +23,15 @@ function TextField<T extends FieldValues>({
   placeholder,
   ...rest
 }: TextFieldProps<T>) {
+  const [isShown, setIsShown] = useState(false);
+
   return (
-    <div className="textField">
+    <div className="textField relative">
       <label htmlFor={name} className="text-secondary-600 text-sm">
         {label}
       </label>
       <input
-        type={type}
+        type={type === "password" && isShown ? "text" : type}
         name={name}
         id={name}
         dir={dir}
@@ -38,6 +41,19 @@ function TextField<T extends FieldValues>({
         } ${className}`}
         {...rest}
       />
+      {type === "password" && (
+        <button
+          type="button"
+          className="absolute right-4 top-10"
+          onClick={() => setIsShown((prev) => !prev)}
+        >
+          {isShown ? (
+            <LuEye className="size-5" />
+          ) : (
+            <LuEyeClosed className="size-5" />
+          )}
+        </button>
+      )}
       {errors && errors[name as keyof T] && (
         <span className="text-error text-xs block">
           {errors[name as keyof T]?.message as string}

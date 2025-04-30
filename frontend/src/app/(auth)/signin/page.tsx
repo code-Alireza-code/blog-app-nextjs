@@ -56,6 +56,7 @@ function Signin() {
           {...register("password")}
           label="رمز عبور "
           dir="ltr"
+          type="password"
         />
         <button
           disabled={isSigningIn}

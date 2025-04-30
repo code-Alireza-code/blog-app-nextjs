@@ -64,6 +64,8 @@ function Signup() {
           errors={errors}
           {...register("password")}
           label="رمز عبور "
+          dir="ltr"
+          type="password"
         />
         <button
           disabled={isSigningUp}
