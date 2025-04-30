@@ -17,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fa" dir="rtl">
+    <html lang="fa" dir="rtl" className="dark-mode">
       <body className={`antialiased ${vazirFont.variable} font-sans`}>
         <Header />
         <div className="container xl:max-w-screen-xl">{children}</div>
