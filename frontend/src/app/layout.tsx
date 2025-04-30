@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "@/styles/globals.css";
 import vazirFont from "@/constants/localFont";
 import Header from "@/ui/Header";
+import Providers from "@/providers/Providers";
 
 export const metadata: Metadata = {
   title: {
@@ -19,8 +20,10 @@ export default function RootLayout({
   return (
     <html lang="fa" dir="rtl" className="dark-mode">
       <body className={`antialiased ${vazirFont.variable} font-sans`}>
-        <Header />
-        <div className="container xl:max-w-screen-xl">{children}</div>
+        <Providers>
+          <Header />
+          <div className="container xl:max-w-screen-xl">{children}</div>
+        </Providers>
       </body>
     </html>
   );
