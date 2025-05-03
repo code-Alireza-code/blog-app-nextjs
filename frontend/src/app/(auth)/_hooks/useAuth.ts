@@ -1,7 +1,8 @@
-import { signInApi, signUpApi } from "@/services/authService";
-import { useMutation } from "@tanstack/react-query";
+import { getUserApi, signInApi, signUpApi } from "@/services/authService";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { BackendError } from "@/types/error";
+import { User } from "@/types/User";
 
 export const useSignup = () =>
   useMutation({
@@ -33,3 +34,15 @@ export const useSignin = () =>
       );
     },
   });
+
+export const useGetUser = () => {
+  const { data, isLoading: isLoadingUser } = useQuery({
+    queryFn: getUserApi,
+    queryKey: ["get-user"],
+    retry: false,
+  });
+
+  const { user }: { user: User } = data || {};
+
+  return { user, isLoadingUser };
+};

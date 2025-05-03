@@ -9,3 +9,7 @@ export async function signUpApi(data: signUpformDataType) {
 export async function signInApi(data: signinFormDataType) {
   return http.post("/user/signin", data).then(({ data }) => data.data);
 }
+
+export async function getUserApi() {
+  return http.get("/user/profile").then(({ data }) => data.data);
+}
