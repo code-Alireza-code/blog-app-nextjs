@@ -1,15 +1,17 @@
-import { PostType } from "@/types/Post";
 import CoverImage from "./CoverImage";
 import Link from "next/link";
 import { FaRegClock } from "react-icons/fa6";
 import Author from "./Author";
 import PostInteraction from "./PostInteraction";
+import { getAllPosts } from "@/services/postService";
+import setCookieOnRequest from "@/utils/setCookieOnReq";
+import { cookies } from "next/headers";
 
 async function PostList() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post/list`);
-  const {
-    data: { posts },
-  }: { data: { posts: PostType[] } } = await res.json();
+  const cookieStore = await cookies();
+  const options = setCookieOnRequest(cookieStore);
+
+  const posts = await getAllPosts(options);
 
   if (!posts.length) return null;
 
