@@ -27,3 +27,8 @@ export async function getAllPosts(options = {}) {
 export async function likePostApi(postId: string) {
   return http.post(`/post/like/${postId}`).then(({ data }) => data.data);
 }
+
+export async function bookmarkPostApi(postId: string) {
+  return http.post(`/post/bookmark/${postId}`).then(({ data }) => data.data);
+}
+

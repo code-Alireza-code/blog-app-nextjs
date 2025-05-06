@@ -4,8 +4,13 @@ import { PostType } from "@/types/Post";
 import ButtonIcon from "@/ui/ButtonIcon";
 import { toPersianDigits } from "@/utils/numberFormatter";
 import { IoIosChatbubbles } from "react-icons/io";
-import { MdBookmarkBorder, MdFavorite, MdFavoriteBorder } from "react-icons/md";
-import { useLikePost } from "../_hooks/usePost";
+import {
+  MdBookmark,
+  MdBookmarkBorder,
+  MdFavorite,
+  MdFavoriteBorder,
+} from "react-icons/md";
+import { useBookmarkPost, useLikePost } from "../_hooks/usePost";
 import { useRouter } from "next/navigation";
 
 type PostInteractionProps = {
@@ -14,6 +19,7 @@ type PostInteractionProps = {
 
 function PostInteraction({ post }: PostInteractionProps) {
   const { mutateAsync: likePost } = useLikePost();
+  const { mutateAsync: BookmarkPost } = useBookmarkPost();
   const router = useRouter();
 
   const handleLike = async () => {
@@ -24,7 +30,13 @@ function PostInteraction({ post }: PostInteractionProps) {
     });
   };
 
-  const handleBookmark = async () => {};
+  const handleBookmark = async () => {
+    await BookmarkPost(post._id, {
+      onSuccess: () => {
+        router.refresh();
+      },
+    });
+  };
 
   return (
     <div className="flex items-center gap-x-4">
@@ -36,7 +48,7 @@ function PostInteraction({ post }: PostInteractionProps) {
         {post.isLiked ? <MdFavorite /> : <MdFavoriteBorder />}
       </ButtonIcon>
       <ButtonIcon variant="primary" onClick={handleBookmark}>
-        <MdBookmarkBorder />
+        {post.isBookmarked ? <MdBookmark /> : <MdBookmarkBorder />}
       </ButtonIcon>
     </div>
   );
