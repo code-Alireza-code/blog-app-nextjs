@@ -3,21 +3,14 @@ import Link from "next/link";
 import { FaRegClock } from "react-icons/fa6";
 import Author from "./Author";
 import PostInteraction from "./PostInteraction";
-import { getAllPosts } from "@/services/postService";
-import setCookieOnRequest from "@/utils/setCookieOnReq";
-import { cookies } from "next/headers";
+import { PostType } from "@/types/Post";
 
-async function PostList() {
-  const cookieStore = await cookies();
-  const options = setCookieOnRequest(cookieStore);
-
-  const posts = await getAllPosts(options);
-
+async function PostList({ posts }: { posts: PostType[] | [] }) {
   if (!posts.length) return null;
 
   return (
     <div className="grid grid-cols-12 gap-8">
-      {posts.map((post) => (
+      {posts?.map((post) => (
         <div
           className="col-span-12 md:col-span-6 lg:col-span-4 border border-secondary-300 p-2 rounded-lg "
           key={post._id}

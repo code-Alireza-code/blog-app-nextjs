@@ -32,3 +32,8 @@ export async function bookmarkPostApi(postId: string) {
   return http.post(`/post/bookmark/${postId}`).then(({ data }) => data.data);
 }
 
+export async function getPostsBySlug(categorySlug: string) {
+  return http
+    .get(`/post/list?categorySlug=${categorySlug}`)
+    .then(({ data }) => data.data);
+}

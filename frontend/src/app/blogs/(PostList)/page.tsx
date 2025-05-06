@@ -1,22 +1,17 @@
-import { Suspense } from "react";
 import PostList from "../_components/PostList";
-import Spinner from "@/ui/Spinner";
-
-export const revalidate = 0;
+import { cookies } from "next/headers";
+import setCookieOnRequest from "@/utils/setCookieOnReq";
+import { getAllPosts } from "@/services/postService";
 
 async function BlogPage() {
+  const cookieStore = await cookies();
+  const options = setCookieOnRequest(cookieStore);
+  const posts = await getAllPosts(options);
+
   return (
     <div>
-      <div className="mb-4 text-secondary-600">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt
-        explicabo fuga nam debitis nemo architecto magni. Quaerat accusantium
-        modi dolor. Vero suscipit soluta cumque impedit reiciendis hic ab
-        dolorem ut.
-      </div>
       <div className="flex items-center justify-center">
-        <Suspense fallback={<Spinner />}>
-          <PostList />
-        </Suspense>
+        <PostList posts={posts} />
       </div>
     </div>
   );
