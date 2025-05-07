@@ -1,6 +1,7 @@
 import { getAllPosts, getPostBySlug } from "@/services/postService";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import RelatedPost from "../_components/RelatedPost";
 
 export const dynamicParams = false;
 
@@ -51,8 +52,8 @@ async function SinglePost({ params }: SinglePostProps) {
             className="object-cover object-center hover:scale-105 transition-all ease-out duration-300"
           />
         </div>
-        {/* {post.related.length > 0 && <RelatedPost />}
-        <PostComments /> */}
+        {post.related.length > 0 && <RelatedPost posts={post.related} />}
+        {/* <PostComments /> */}
       </div>
     </div>
   );

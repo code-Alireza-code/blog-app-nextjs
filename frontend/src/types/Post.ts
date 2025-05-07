@@ -34,7 +34,7 @@ type CommentType = {
   _id: string;
 };
 
-type RelatedPostType = Pick<
+export type RelatedPostType = Pick<
   PostType,
   | "author"
   | "category"
