@@ -12,9 +12,9 @@ export async function getPostBySlug(slug: string) {
   return post;
 }
 
-export async function getAllPosts(options = {}) {
+export async function getAllPosts(q = "", options = {}) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/post/list`,
+    `${process.env.NEXT_PUBLIC_API_URL}/post/list?${q}`,
     options
   );
   const { data } = await res.json();
@@ -32,8 +32,12 @@ export async function bookmarkPostApi(postId: string) {
   return http.post(`/post/bookmark/${postId}`).then(({ data }) => data.data);
 }
 
-export async function getPostsBySlug(categorySlug: string) {
+export async function getPostsBySlug(
+  categorySlug: string,
+  q = "",
+  options = {}
+) {
   return http
-    .get(`/post/list?categorySlug=${categorySlug}`)
+    .get(`/post/list?categorySlug=${categorySlug}&${q}`, options)
     .then(({ data }) => data.data);
 }

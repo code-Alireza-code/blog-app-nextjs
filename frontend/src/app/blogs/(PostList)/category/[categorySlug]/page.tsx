@@ -1,14 +1,23 @@
 import { getPostsBySlug } from "@/services/postService";
+import setCookieOnRequest from "@/utils/setCookieOnReq";
 import PostList from "app/blogs/_components/PostList";
+import { cookies } from "next/headers";
+import queryString from "query-string";
 
 type Props = {
   params: Promise<{ categorySlug: string }>;
+  searchParams: Promise<{ search: string }>;
 };
 
-async function CategoryPage({ params }: Props) {
+async function CategoryPage({ params, searchParams }: Props) {
   const { categorySlug } = await params;
+  const search = await searchParams;
+  const searchQuery = queryString.stringify(search);
 
-  const { posts } = await getPostsBySlug(categorySlug);
+  const cookieStore = await cookies();
+  const options = setCookieOnRequest(cookieStore);
+
+  const { posts } = await getPostsBySlug(categorySlug, searchQuery, options);
 
   return (
     <div>
