@@ -15,7 +15,7 @@ type User = PostAuthorType;
 
 type Status = 0 | 1 | 2;
 
-type AnswerType = {
+export type AnswerType = {
   content: string;
   createdAt: string;
   openToComment: false;
@@ -24,9 +24,9 @@ type AnswerType = {
   _id: string;
 };
 
-type CommentType = {
+export type CommentType = {
   answers?: AnswerType[];
-  content: string;
+  content: { text: string };
   createdAt: string;
   openToComment: true;
   status: Status;
