@@ -1,8 +1,17 @@
+import { createComment } from "@/lib/actions";
+import { CommentType } from "@/types/Post";
 import Button from "@/ui/Button";
 import TextArea from "@/ui/TextArea";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { z } from "zod";
+
+type Props = {
+  postId: string;
+  parent: CommentType | null;
+  onClose: () => void;
+};
 
 const validationSchema = z.object({
   text: z.string().nonempty("نظر نباید خالی باشد !"),
@@ -10,15 +19,21 @@ const validationSchema = z.object({
 
 export type CommentFormDataType = z.infer<typeof validationSchema>;
 
-function CommentForm() {
+function CommentForm({ postId, parent, onClose }: Props) {
   const {
     register,
-    formState: { errors },
     handleSubmit,
+    formState: { errors, isSubmitting },
   } = useForm<CommentFormDataType>({ resolver: zodResolver(validationSchema) });
 
-  const handleAddComment = (formData: CommentFormDataType) => {
-    console.log(formData);
+  const handleAddComment = async (formData: CommentFormDataType) => {
+    const data = await createComment(formData, postId, parent);
+    if (data?.errMsg) {
+      toast.error(data.errMsg);
+    } else {
+      toast.success(data.message);
+    }
+    onClose();
   };
 
   return (
@@ -31,7 +46,9 @@ function CommentForm() {
               errors={errors}
               placeholder="نظر خود را اینجا وارد کنید..."
             />
-            <Button>ثبت نظر</Button>
+            <Button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? "درحال ایجاد نظر" : "ثبت نظر"}
+            </Button>
           </form>
         </div>
       </div>

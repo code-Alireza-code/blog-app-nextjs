@@ -37,7 +37,11 @@ function PostComment({ post: { comments, _id: postId } }: PostCommentProps) {
         title={parent ? "پاسخ به نظر" : " نظر جدید"}
         description={parent ? parent.user.name : "نظر خود را وارد کنید"}
       >
-        <CommentForm />
+        <CommentForm
+          parent={parent}
+          postId={postId}
+          onClose={() => setOpen(false)}
+        />
       </Modal>
       <div className="flex flex-col items-center lg:flex-row justify-between gap-y-3 mb-8">
         <h2 className="text-2xl font-bold text-secondary-800">نظرات</h2>
