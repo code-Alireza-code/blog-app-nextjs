@@ -2,12 +2,10 @@ import { ButtonHTMLAttributes, ReactNode } from "react";
 
 type VariantType = "primary" | "secondary" | "outline" | "danger";
 
-type ButtonPropsType = {
+type ButtonPropsType = ButtonHTMLAttributes<HTMLButtonElement> & {
   children: ReactNode;
-  onClick?: () => void;
   variant?: VariantType;
   className?: string;
-  rest?: ButtonHTMLAttributes<HTMLButtonElement>;
 };
 
 const btnType = {
@@ -21,6 +19,7 @@ function Button({
   children,
   onClick,
   variant = "primary",
+  type = "button",
   className,
   ...rest
 }: ButtonPropsType) {
@@ -28,6 +27,7 @@ function Button({
     <button
       onClick={onClick}
       className={`btn ${btnType[variant]} ${className}`}
+      type={type}
       {...rest}
     >
       {children}
