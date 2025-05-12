@@ -15,14 +15,14 @@ type ButtonIconProps = {
   children: ReactNode;
   onClick?: () => void;
   className?: string;
-  variant: keyof typeof btnType;
+  variant?: keyof typeof btnType;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 function ButtonIcon({
   children,
   onClick,
   className,
-  variant,
+  variant = "primary",
   ...rest
 }: ButtonIconProps) {
   return (
