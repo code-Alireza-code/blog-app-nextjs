@@ -1,6 +1,6 @@
 "use client";
 
-import { useGetUser } from "app/(auth)/_hooks/useAuth";
+import { useGetUser } from "@/hooks/useAuth";
 import NavLink from "./NavLink";
 
 const navLinks = [

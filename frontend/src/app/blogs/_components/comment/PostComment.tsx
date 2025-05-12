@@ -8,7 +8,7 @@ import Comment from "./Comment";
 import classNames from "classnames";
 import Modal from "@/ui/Modal";
 import CommentForm from "./CommentForm";
-import { useGetUser } from "app/(auth)/_hooks/useAuth";
+import { useGetUser } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 
 type PostCommentProps = {

@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { useSignup } from "../_hooks/useAuth";
+import { useSignup } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 
 const validationSchema = z.object({

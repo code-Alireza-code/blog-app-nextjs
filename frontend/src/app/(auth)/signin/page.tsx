@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 
 import { z } from "zod";
-import { useSignin } from "../_hooks/useAuth";
+import { useSignin } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 
 const validationSchema = z.object({
