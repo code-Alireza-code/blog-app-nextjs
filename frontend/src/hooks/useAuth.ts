@@ -1,4 +1,9 @@
-import { getUserApi, signInApi, signUpApi } from "@/services/authService";
+import {
+  getUserApi,
+  logoutUserApi,
+  signInApi,
+  signUpApi,
+} from "@/services/authService";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { BackendError } from "@/types/error";
@@ -10,6 +15,7 @@ export const useSignup = () =>
 
     onSuccess: (data) => {
       toast.success(data.message || "ثبت نام با موفقیت انجام شد");
+      window.location.reload();
     },
     onError: (err: unknown) => {
       toast.error(
@@ -25,6 +31,7 @@ export const useSignin = () =>
     mutationFn: signInApi,
     onSuccess: (data) => {
       toast.success(data.message || "ثبت نام با موفقیت انجام شد");
+      window.location.reload();
     },
     onError: (err: unknown) => {
       toast.error(
@@ -45,4 +52,29 @@ export const useGetUser = () => {
   const { user }: { user: User } = data || {};
 
   return { user, isLoadingUser };
+};
+
+export const useLogoutUser = () => {
+  const {
+    data,
+    isPending: isLogingOut,
+    mutateAsync: logout,
+  } = useMutation({
+    mutationFn: logoutUserApi,
+    onSuccess: () => {
+      window.location.reload();
+      toast.success("از حساب کاربری خارج شدید !");
+    },
+    onError: (err: unknown) => {
+      toast.error(
+        (err as BackendError).response?.data?.message ||
+          (err as Error).message ||
+          "خطا در هنگام خروج از حساب کاربری !"
+      );
+    },
+  });
+
+  const { auth }: { auth: boolean } = data || {};
+
+  return { auth, isLogingOut, logout };
 };
