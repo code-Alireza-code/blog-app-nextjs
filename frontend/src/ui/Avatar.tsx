@@ -9,7 +9,7 @@ type AvatarProps = {
 function Avatar({ src, width = 24, alt, ...rest }: AvatarProps) {
   return (
     <Image
-      className="rounded-full ring-1 ring-secondary-300 ml-2"
+      className="rounded-full ring-1 ring-secondary-300"
       src={src || "/images/avatar.png"}
       alt={alt}
       width={width}
