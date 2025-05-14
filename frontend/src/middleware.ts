@@ -6,7 +6,6 @@ import {
 import middlewareAuth from "./utils/middlewareAuth";
 
 export async function middleware(request: NextRequest) {
-  console.log(request);
   if (request.nextUrl.pathname.startsWith("/profile")) {
     const user = await middlewareAuth(request);
     if (!user)
