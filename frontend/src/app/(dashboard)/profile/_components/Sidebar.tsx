@@ -2,24 +2,37 @@
 
 import { useLogoutUser } from "@/hooks/useAuth";
 import Link from "next/link";
-import { MdHome, MdOutlineLogout } from "react-icons/md";
+import { MdClose, MdHome, MdOutlineLogout } from "react-icons/md";
 import SideBarNavs from "./SidebarNavs";
+import ButtonIcon from "@/ui/ButtonIcon";
 
-function Sidebar() {
+type Props = { onClose: () => void };
+
+function Sidebar({ onClose }: Props) {
   const { logout } = useLogoutUser();
 
   const handleLogout = async () => {
     await logout();
   };
   return (
-    <div className="overflow-y-auto flex flex-col p-5 h-screen pt-10 lg:pt-8">
-      <Link
-        href="/"
-        className="flex items-center gap-x-4 justify-center text-secondary-700 border-b border-b-secondary-200 pb-2 mb-6"
-      >
-        <MdHome className="size-6" />
-        <span>نکست بلاگ</span>
-      </Link>
+    <div className="overflow-y-auto flex flex-col p-6 h-screen pt-10 lg:pt-8">
+      <div className="flex items-center justify-between w-full mb-5 pb-2 border-b border-b-secondary-200">
+        <Link
+          href="/"
+          className="flex items-center gap-x-4 justify-center text-secondary-700 pb-2"
+        >
+          <MdHome className="size-6" />
+          <span>نکست بلاگ</span>
+          <ButtonIcon
+            className="block lg:hidden border-none"
+            onClick={onClose}
+            variant="outline"
+          >
+            <MdClose />
+          </ButtonIcon>
+        </Link>
+      </div>
+      {/* sidebar content */}
       <div className="overflow-y-auto flex-auto">
         <SideBarNavs />
         <div
