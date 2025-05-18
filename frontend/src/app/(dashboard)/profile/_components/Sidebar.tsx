@@ -6,7 +6,7 @@ import { MdClose, MdHome, MdOutlineLogout } from "react-icons/md";
 import SideBarNavs from "./SidebarNavs";
 import ButtonIcon from "@/ui/ButtonIcon";
 
-type Props = { onClose: () => void };
+type Props = { onClose?: () => void };
 
 function Sidebar({ onClose }: Props) {
   const { logout } = useLogoutUser();
