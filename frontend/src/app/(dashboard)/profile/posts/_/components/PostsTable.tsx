@@ -2,8 +2,12 @@ import { getAllPosts } from "@/services/postService";
 import Table from "@/ui/Table";
 import PostRow from "./PostRow";
 
-async function PostsTable() {
-  const posts = await getAllPosts();
+type Props = {
+  postQuery?: string;
+};
+
+async function PostsTable({ postQuery = "" }: Props) {
+  const posts = await getAllPosts(postQuery);
 
   if (!posts.length) return <p>پستی یافت نشد</p>;
 
