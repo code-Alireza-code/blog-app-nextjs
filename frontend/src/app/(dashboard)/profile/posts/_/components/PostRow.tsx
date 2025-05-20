@@ -3,6 +3,7 @@ import Table from "@/ui/Table";
 import toLocaleDateString from "@/utils/dateFormater";
 import { toPersianDigits } from "@/utils/numberFormatter";
 import truncateText from "@/utils/truncateText";
+import { DeletePost, EditPost } from "./Buttons";
 
 type Props = {
   post: PostType;
@@ -33,7 +34,12 @@ function PostRow({ post, index }: Props) {
           {typeStyle[post.type].label}
         </span>
       </td>
-      <td>actions</td>
+      <td>
+        <div className="flex items-center gap-x-3">
+          <EditPost postId={post._id} />
+          <DeletePost postId={post._id} />
+        </div>
+      </td>
     </Table.row>
   );
 }
