@@ -19,7 +19,7 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-  const posts = await getAllPosts();
+  const { posts } = await getAllPosts();
 
   return posts.map((post) => ({
     postSlug: post.slug,

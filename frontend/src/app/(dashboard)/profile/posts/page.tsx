@@ -4,6 +4,7 @@ import Fallback from "@/ui/Fallback";
 import Search from "@/ui/Search";
 import { CreatePost } from "./_/components/Buttons";
 import queryString from "query-string";
+import { getAllPosts } from "@/services/postService";
 
 type Props = {
   searchParams: Promise<{ search: string }>;
@@ -11,7 +12,7 @@ type Props = {
 
 async function Page({ searchParams }: Props) {
   const query = queryString.stringify(await searchParams);
-  console.log(query);
+  const { totalPages } = await getAllPosts(query);
 
   return (
     <div>
@@ -23,6 +24,9 @@ async function Page({ searchParams }: Props) {
       <Suspense fallback={<Fallback />} key={query}>
         <PostsTable postQuery={query} />
       </Suspense>
+      <div className="mt-5 flex w-full justify-center">
+        
+      </div>
     </div>
   );
 }

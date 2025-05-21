@@ -7,7 +7,7 @@ type Props = {
 };
 
 async function PostsTable({ postQuery = "" }: Props) {
-  const posts = await getAllPosts(postQuery);
+  const { posts } = await getAllPosts(postQuery);
 
   if (!posts.length) return <p>پستی یافت نشد</p>;
 

@@ -14,7 +14,7 @@ async function BlogPage({ searchParams }: Props) {
 
   const cookieStore = await cookies();
   const options = setCookieOnRequest(cookieStore);
-  const posts = await getAllPosts(searchQuery, options);
+  const { posts } = await getAllPosts(searchQuery, options);
 
   return (
     <>
