@@ -5,6 +5,7 @@ import Search from "@/ui/Search";
 import { CreatePost } from "./_/components/Buttons";
 import queryString from "query-string";
 import { getAllPosts } from "@/services/postService";
+import Pagination from "@/ui/Pagination";
 
 type Props = {
   searchParams: Promise<{ search: string }>;
@@ -25,7 +26,7 @@ async function Page({ searchParams }: Props) {
         <PostsTable postQuery={query} />
       </Suspense>
       <div className="mt-5 flex w-full justify-center">
-        
+        <Pagination totalPages={totalPages} />
       </div>
     </div>
   );
