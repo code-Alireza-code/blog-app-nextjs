@@ -1,19 +1,18 @@
 import { HTMLInputTypeAttribute, InputHTMLAttributes, useState } from "react";
-import { FieldErrors, FieldValues } from "react-hook-form";
+import { FieldErrors } from "react-hook-form";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
 
-type TextFieldProps<T extends FieldValues> = {
+type TextFieldProps = {
   type?: HTMLInputTypeAttribute;
   label?: string;
   name: string;
   dir?: "ltr" | "rtl";
   className?: string;
-  rest?: InputHTMLAttributes<HTMLInputElement>;
   placeholder?: string;
-  errors?: FieldErrors<T> | null;
-};
+  errors?: FieldErrors | null;
+} & InputHTMLAttributes<HTMLInputElement>;
 
-function TextField<T extends FieldValues>({
+function TextField({
   type = "text",
   label,
   name,
@@ -22,12 +21,12 @@ function TextField<T extends FieldValues>({
   errors = null,
   placeholder,
   ...rest
-}: TextFieldProps<T>) {
+}: TextFieldProps) {
   const [isShown, setIsShown] = useState(false);
 
   return (
     <div className="textField relative">
-      <label htmlFor={name} className="text-secondary-600 text-sm">
+      <label htmlFor={name} className="text-secondary-900 text-sm">
         {label}
       </label>
       <input
@@ -54,9 +53,9 @@ function TextField<T extends FieldValues>({
           )}
         </button>
       )}
-      {errors && errors[name as keyof T] && (
-        <span className="text-error text-xs block">
-          {errors[name as keyof T]?.message as string}
+      {errors && errors[name] && (
+        <span className="text-error mt-1 text-xs block">
+          {errors[name]?.message as string}
         </span>
       )}
     </div>
