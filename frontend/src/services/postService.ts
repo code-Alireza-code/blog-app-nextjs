@@ -42,3 +42,7 @@ export async function getPostsBySlug(
     .get(`/post/list?categorySlug=${categorySlug}&${q}`, options)
     .then(({ data }) => data.data);
 }
+
+export async function createPostApi(formData: FormData) {
+  return http.post("/post/create", formData).then(({ data }) => data.data);
+}

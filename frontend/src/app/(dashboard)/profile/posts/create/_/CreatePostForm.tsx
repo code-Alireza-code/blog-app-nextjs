@@ -12,18 +12,18 @@ import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { MdClose } from "react-icons/md";
 import { z } from "zod";
+import { useCreatePost } from "./useCreatePost";
+import { useRouter } from "next/navigation";
 
 const validationSchema = z.object({
   title: z.string().nonempty("عنوان پست اجباری است !"),
   briefText: z.string().nonempty("خلاصه پست اجباری است !"),
   slug: z.string().nonempty("اسلاگ پست اجباری است !"),
-  tags: z.array(z.string()).optional(),
   text: z.string().nonempty("متن پست اجباری است !"),
   readingTime: z.string().nonempty("زمان مطالعه پست اجباری است !"),
   category: z.string().nonempty("یک دسته بندی انتخاب کنید !"),
   coverImage: z
-    .instanceof(File)
-    .optional()
+    .instanceof(File, { message: "کاور پست اجباری است !!" })
     .refine((file) => file instanceof File && file.size > 0, {
       message: "کاور پست اجباری است !",
     }),
@@ -43,9 +43,26 @@ function CreatePostForm() {
   });
   const [coverImageUrl, setCoverImageUrl] = useState<string | null>(null);
   const { transformedCategories } = useGetAllCategories();
+  const { createPost, isCreating } = useCreatePost();
+  const router = useRouter();
 
-  const handleCreatePost = (formData: CreatePostFormDataType) => {
-    console.log(formData);
+  const handleCreatePost = async (data: CreatePostFormDataType) => {
+    const formData = new FormData();
+    (Object.keys(data) as (keyof CreatePostFormDataType)[]).forEach((key) => {
+      const value = data[key];
+      if (value === undefined) return;
+      else if (key === "coverImage" && value instanceof File) {
+        formData.append(key, value);
+      } else {
+        formData.append(key, value as string);
+      }
+    });
+
+    await createPost(formData, {
+      onSuccess: () => {
+        router.push("/profile/posts");
+      },
+    });
   };
 
   return (
@@ -119,7 +136,7 @@ function CreatePostForm() {
           <ButtonIcon
             onClick={() => {
               setCoverImageUrl(null);
-              setValue("coverImage", undefined);
+              setValue("coverImage", undefined as unknown as File);
             }}
             variant="red"
             className="size-6 absolute left-0"
@@ -128,7 +145,13 @@ function CreatePostForm() {
           </ButtonIcon>
         </div>
       )}
-      <Button type="submit">ایجاد پست</Button>
+      <Button
+        type="submit"
+        disabled={isCreating}
+        className="disabled:bg-gray-400/50"
+      >
+        {isCreating ? "درحال ارسال اطلاعات" : "ایجاد پست"}
+      </Button>
     </form>
   );
 }
