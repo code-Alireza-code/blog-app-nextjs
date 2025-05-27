@@ -46,3 +46,19 @@ export async function getPostsBySlug(
 export async function createPostApi(formData: FormData) {
   return http.post("/post/create", formData).then(({ data }) => data.data);
 }
+
+export async function editPostApi({
+  formData,
+  postId,
+}: {
+  postId: string;
+  formData: FormData;
+}) {
+  return http
+    .patch(`/post/update/${postId}`, formData)
+    .then(({ data }) => data.data);
+}
+
+export async function getPostByIdApi(postId: string) {
+  return http.get(`post/${postId}`).then(({ data }) => data.data);
+}

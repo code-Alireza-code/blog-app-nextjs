@@ -8,12 +8,15 @@ import Select from "@/ui/Select";
 import TextField from "@/ui/TextField";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { MdClose } from "react-icons/md";
 import { z } from "zod";
 import { useCreatePost } from "./useCreatePost";
 import { useRouter } from "next/navigation";
+import { PostType } from "@/types/Post";
+import { useEditPost } from "./useEditPost";
+import { imageUrlToFile } from "@/utils/fileFormatter";
 
 const validationSchema = z.object({
   title: z.string().nonempty("عنوان پست اجباری است !"),
@@ -31,22 +34,50 @@ const validationSchema = z.object({
 
 export type CreatePostFormDataType = z.infer<typeof validationSchema>;
 
-function CreatePostForm() {
+type Props = {
+  post?: null | PostType;
+  editPostId?: string;
+};
+function CreatePostForm({ post = null, editPostId }: Props) {
   const {
     register,
     formState: { errors },
     handleSubmit,
     control,
     setValue,
+    reset,
   } = useForm<CreatePostFormDataType>({
     resolver: zodResolver(validationSchema),
   });
-  const [coverImageUrl, setCoverImageUrl] = useState<string | null>(null);
+  const [coverImageUrl, setCoverImageUrl] = useState<string | null>(
+    post?.coverImageUrl || null
+  );
+  const isEditSession = Boolean(editPostId);
   const { transformedCategories } = useGetAllCategories();
   const { createPost, isCreating } = useCreatePost();
+  const { editPost, isEditing } = useEditPost();
   const router = useRouter();
 
-  const handleCreatePost = async (data: CreatePostFormDataType) => {
+  useEffect(() => {
+    if (post) {
+      const setFormData = async () => {
+        const coverImageFile = await imageUrlToFile(post.coverImage);
+        reset({
+          title: post.title,
+          text: post.text,
+          briefText: post.briefText,
+          category: post.category._id,
+          readingTime: post.readingTime.toString(),
+          slug: post.slug,
+          coverImage: coverImageFile,
+        });
+        setCoverImageUrl(post.coverImageUrl || null);
+      };
+      setFormData();
+    }
+  }, [post, reset]);
+
+  const handeSubmitForm = async (data: CreatePostFormDataType) => {
     const formData = new FormData();
     (Object.keys(data) as (keyof CreatePostFormDataType)[]).forEach((key) => {
       const value = data[key];
@@ -58,15 +89,26 @@ function CreatePostForm() {
       }
     });
 
-    await createPost(formData, {
-      onSuccess: () => {
-        router.push("/profile/posts");
-      },
-    });
+    if (isEditSession) {
+      await editPost(
+        { formData, postId: editPostId as string },
+        {
+          onSuccess: () => {
+            router.push("/profile/posts");
+          },
+        }
+      );
+    } else {
+      await createPost(formData, {
+        onSuccess: () => {
+          router.push("/profile/posts");
+        },
+      });
+    }
   };
 
   return (
-    <form className="form" onSubmit={handleSubmit(handleCreatePost)} noValidate>
+    <form className="form" onSubmit={handleSubmit(handeSubmitForm)} noValidate>
       <TextField
         {...register("title")}
         errors={errors}
@@ -150,7 +192,13 @@ function CreatePostForm() {
         disabled={isCreating}
         className="disabled:bg-gray-400/50"
       >
-        {isCreating ? "درحال ارسال اطلاعات" : "ایجاد پست"}
+        {isEditSession
+          ? isEditing
+            ? "درحال ارسال اطلاعات"
+            : "ویرایش پست"
+          : isCreating
+          ? "درحال ارسال اطلاعات"
+          : "ایجاد پست"}
       </Button>
     </form>
   );
