@@ -26,7 +26,7 @@ export function EditPost({ postId }: Props) {
     console.log(postId);
   };
   return (
-    <Link href={`/profile/post/${postId}/edit`}>
+    <Link href={`/profile/posts/${postId}/edit`}>
       <ButtonIcon onClick={handleEdit} variant="outline">
         <MdEdit />
       </ButtonIcon>
