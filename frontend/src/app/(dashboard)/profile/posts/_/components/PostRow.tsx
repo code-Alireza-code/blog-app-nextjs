@@ -37,7 +37,7 @@ function PostRow({ post, index }: Props) {
       <td>
         <div className="flex items-center gap-x-3">
           <EditPost postId={post._id} />
-          <DeletePost postId={post._id} />
+          <DeletePost postId={post._id} postTitle={post.title} />
         </div>
       </td>
     </Table.row>

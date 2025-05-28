@@ -1,33 +1,69 @@
 "use client";
 
 import ButtonIcon from "@/ui/ButtonIcon";
+import Modal from "@/ui/Modal";
 import Link from "next/link";
+import { useState } from "react";
 import { FaPlus } from "react-icons/fa6";
 import { IoMdTrash } from "react-icons/io";
 import { MdEdit } from "react-icons/md";
+import Button from "@/ui/Button";
+import { useDeletePost } from "../../create/_/useDeletePost";
+import { useRouter } from "next/navigation";
 
-type Props = {
+export function DeletePost({
+  postId,
+  postTitle,
+}: {
   postId: string;
-};
+  postTitle: string;
+}) {
+  const [open, setOpen] = useState(false);
+  const { deletePost, isDeleting } = useDeletePost();
+  const router = useRouter();
 
-export function DeletePost({ postId }: Props) {
-  const handleDelete = () => {
-    console.log(postId);
+  const handleDelete = async () => {
+    await deletePost(postId, {
+      onSuccess: () => {
+        setOpen(false);
+        router.refresh();
+      },
+      onError: () => {},
+    });
   };
+
   return (
-    <ButtonIcon onClick={handleDelete} variant="outline">
-      <IoMdTrash className="text-error" />
-    </ButtonIcon>
+    <>
+      <ButtonIcon onClick={() => setOpen(true)} variant="outline">
+        <IoMdTrash className="text-error" />
+      </ButtonIcon>
+      <Modal
+        open={open}
+        onClose={() => setOpen(false)}
+        title={`آیا از حذف پست ${postTitle} مطمئن هستید ؟`}
+      >
+        <div className="flex items-center justify-between gap-x-4">
+          <Button
+            disabled={isDeleting}
+            variant="danger"
+            className="grow"
+            onClick={handleDelete}
+          >
+            بله,حذف شود
+          </Button>
+          <Button className="grow" onClick={() => setOpen(false)}>
+            لغو
+          </Button>
+        </div>
+      </Modal>
+    </>
   );
 }
 
-export function EditPost({ postId }: Props) {
-  const handleEdit = () => {
-    console.log(postId);
-  };
+export function EditPost({ postId }: { postId: string }) {
   return (
     <Link href={`/profile/posts/${postId}/edit`}>
-      <ButtonIcon onClick={handleEdit} variant="outline">
+      <ButtonIcon variant="outline">
         <MdEdit />
       </ButtonIcon>
     </Link>
