@@ -63,6 +63,8 @@ export async function getPostByIdApi(postId: string) {
   return http.get(`post/${postId}`).then(({ data }) => data.data);
 }
 
-export async function deletePostApi(postId: string) {
-  return http.delete(`/post/remove/${postId}`).then(({ data }) => data.data);
+export async function deletePostApi(postId: string, options = {}) {
+  return http
+    .delete(`/post/remove/${postId}`, options)
+    .then(({ data }) => data.data);
 }

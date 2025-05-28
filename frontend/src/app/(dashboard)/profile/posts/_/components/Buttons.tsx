@@ -31,6 +31,16 @@ export function DeletePost({
       onError: () => {},
     });
   };
+  //# using server action
+  // const handleDeleteAction = async () => {
+  //   const { message, error } = await deletePostAction(postId);
+  //   if (message) {
+  //     toast.success(message);
+  //   } else {
+  //     toast.error(error as string);
+  //   }
+  //   setOpen(false);
+  // };
 
   return (
     <>
