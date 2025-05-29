@@ -2,7 +2,7 @@
 
 import { createCommentApi } from "@/services/commentService";
 import { BackendError } from "@/types/error";
-import { CommentType } from "@/types/Post";
+import { Comment } from "@/types/Post";
 import setCookieOnRequest from "@/utils/setCookieOnReq";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
@@ -17,7 +17,7 @@ const validationSchema = z.object({
 export async function createComment(
   formData: { text: string },
   postId: string,
-  parent: CommentType | null
+  parent: Comment | null
 ) {
   const cookieStore = await cookies();
   const options = setCookieOnRequest(cookieStore);

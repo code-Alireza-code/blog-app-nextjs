@@ -14,7 +14,7 @@ import { MdClose } from "react-icons/md";
 import { z } from "zod";
 import { useCreatePost } from "./useCreatePost";
 import { useRouter } from "next/navigation";
-import { PostType } from "@/types/Post";
+import { Post } from "@/types/Post";
 import { useEditPost } from "./useEditPost";
 import { imageUrlToFile } from "@/utils/fileFormatter";
 
@@ -35,7 +35,7 @@ const validationSchema = z.object({
 export type CreatePostFormDataType = z.infer<typeof validationSchema>;
 
 type Props = {
-  post?: null | PostType;
+  post?: null | Post;
   editPostId?: string;
 };
 function CreatePostForm({ post = null, editPostId }: Props) {

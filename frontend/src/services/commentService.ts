@@ -1,9 +1,9 @@
-import { CommentType } from "@/types/Post";
+import { Comment } from "@/types/Post";
 import http from "./httpService";
 
 type createCommentFormData = {
   text: string;
-  parent: CommentType | null;
+  parent: Comment | null;
   postId: string;
 };
 

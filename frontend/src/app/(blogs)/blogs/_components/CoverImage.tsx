@@ -1,8 +1,8 @@
-import { PostType } from "@/types/Post";
+import { Post } from "@/types/Post";
 import Image from "next/image";
 import Link from "next/link";
 
-type CoverImageProps = Pick<PostType, "coverImageUrl" | "title" | "slug">;
+type CoverImageProps = Pick<Post, "coverImageUrl" | "title" | "slug">;
 
 function CoverImage({ coverImageUrl, title, slug }: CoverImageProps) {
   return (

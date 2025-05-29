@@ -1,5 +1,5 @@
 import { createComment } from "@/lib/actions";
-import { CommentType } from "@/types/Post";
+import { Comment } from "@/types/Post";
 import Button from "@/ui/Button";
 import TextArea from "@/ui/TextArea";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,7 +9,7 @@ import { z } from "zod";
 
 type Props = {
   postId: string;
-  parent: CommentType | null;
+  parent: Comment | null;
   onClose: () => void;
 };
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { PostType } from "@/types/Post";
+import { Post } from "@/types/Post";
 import ButtonIcon from "@/ui/ButtonIcon";
 import { toPersianDigits } from "@/utils/numberFormatter";
 import { IoIosChatbubbles } from "react-icons/io";
@@ -14,7 +14,7 @@ import { useBookmarkPost, useLikePost } from "../_hooks/usePost";
 import { useRouter } from "next/navigation";
 
 type PostInteractionProps = {
-  post: PostType;
+  post: Post;
 };
 
 function PostInteraction({ post }: PostInteractionProps) {

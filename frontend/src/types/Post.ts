@@ -1,41 +1,46 @@
-type PostAuthorType = {
+// Use interfaces for extensible object types
+export interface PostAuthor {
   avatar?: string;
   avatarUrl?: string;
   name: string;
   _id: string;
-};
+}
 
-type CategoryType = {
+export interface Category {
   _id: string;
   title: string;
   slug: string;
-};
+}
 
-type User = PostAuthorType;
+// Use enum for status
+export enum Status {
+  Pending = 0,
+  Approved = 1,
+  Rejected = 2,
+}
 
-type Status = 0 | 1 | 2;
-
-export type AnswerType = {
+// Use boolean for openToComment
+export interface Answer {
   content: string;
   createdAt: string;
-  openToComment: false;
+  openToComment: boolean;
   status: Status;
-  user: User;
+  user: PostAuthor;
   _id: string;
-};
+}
 
-export type CommentType = {
-  answers?: AnswerType[];
+export interface Comment {
+  answers?: Answer[];
   content: { text: string };
   createdAt: string;
-  openToComment: true;
+  openToComment: boolean;
   status: Status;
-  user: User;
+  user: PostAuthor;
   _id: string;
-};
+}
 
-export type RelatedPostType = Pick<
-  PostType,
+export type RelatedPost = Pick<
+  Post,
   | "author"
   | "category"
   | "coverImage"
@@ -46,11 +51,11 @@ export type RelatedPostType = Pick<
   | "_id"
 >;
 
-export type PostType = {
-  author: PostAuthorType;
+export interface Post {
+  author: PostAuthor;
   briefText: string;
-  category: CategoryType;
-  comments: [] | CommentType[];
+  category: Category;
+  comments: Comment[];
   commentsCount: number;
   coverImage: string;
   coverImageUrl: string;
@@ -60,13 +65,13 @@ export type PostType = {
   isLiked: boolean;
   likesCount: number;
   readingTime: number;
-  related: [] | RelatedPostType[];
+  related: RelatedPost[];
   slug: string;
-  tags: [] | string[];
+  tags: string[];
   text: string;
   title: string;
   type: "free";
   updatedAt: string;
   __v: number;
   _id: string;
-};
+}

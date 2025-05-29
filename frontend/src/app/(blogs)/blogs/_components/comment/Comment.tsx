@@ -1,10 +1,10 @@
-import { AnswerType, CommentType } from "@/types/Post";
+import type { Answer, Comment } from "@/types/Post";
 import Avatar from "@/ui/Avatar";
 import Button from "@/ui/Button";
 import { HiArrowUturnRight } from "react-icons/hi2";
 
 type CommentProps = {
-  comment: CommentType | AnswerType;
+  comment: Comment | Answer;
   onAddComment: () => void;
 };
 

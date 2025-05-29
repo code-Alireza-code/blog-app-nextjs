@@ -2,7 +2,7 @@ import BreadCrumbs from "@/ui/Breadcrumbs";
 import { notFound } from "next/navigation";
 import CreatePostForm from "../../create/_/CreatePostForm";
 import { getPostByIdApi } from "@/services/postService";
-import { PostType } from "@/types/Post";
+import { Post } from "@/types/Post";
 import { BackendError } from "@/types/error";
 
 type Props = {
@@ -15,7 +15,7 @@ async function EditPage({ params }: Props) {
       (err as BackendError).response.data.message || "error fetch post by id"
     )
   );
-  const { post }: { post: PostType } = data || {};
+  const { post }: { post: Post } = data || {};
 
   if (!post) {
     notFound();

@@ -1,5 +1,5 @@
 import { getPostByIdApi } from "@/services/postService";
-import { PostType } from "@/types/Post";
+import { Post } from "@/types/Post";
 import { useQuery } from "@tanstack/react-query";
 
 export const useGetPostById = (postId: string) => {
@@ -9,7 +9,7 @@ export const useGetPostById = (postId: string) => {
     retry: false,
   });
 
-  const { post }: { post: PostType } = data || {};
+  const { post }: { post: Post } = data || {};
 
   return { post, isLoadingPost };
 };

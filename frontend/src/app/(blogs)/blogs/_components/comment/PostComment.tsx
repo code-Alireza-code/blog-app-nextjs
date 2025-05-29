@@ -1,6 +1,7 @@
 "use client";
 
-import { CommentType, PostType } from "@/types/Post";
+import type { Comment as CommentType } from "@/types/Post";
+import { Post } from "@/types/Post";
 import Button from "@/ui/Button";
 import { useState } from "react";
 import { HiQuestionMarkCircle } from "react-icons/hi2";
@@ -12,7 +13,7 @@ import { useGetUser } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 
 type PostCommentProps = {
-  post: PostType;
+  post: Post;
 };
 
 function PostComment({ post: { comments, _id: postId } }: PostCommentProps) {

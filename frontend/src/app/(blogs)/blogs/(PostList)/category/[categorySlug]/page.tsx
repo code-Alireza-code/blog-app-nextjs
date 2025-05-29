@@ -1,6 +1,7 @@
 import { getPostsBySlug } from "@/services/postService";
 import setCookieOnRequest from "@/utils/setCookieOnReq";
-import PostList from "app/blogs/_components/PostList";
+import PostList from "app/(blogs)/blogs/_components/PostList";
+
 import { cookies } from "next/headers";
 import queryString from "query-string";
 

@@ -1,4 +1,4 @@
-import { RelatedPostType } from "@/types/Post";
+import { RelatedPost as RelatedPostType } from "@/types/Post";
 import CoverImage from "./CoverImage";
 import Author from "./Author";
 

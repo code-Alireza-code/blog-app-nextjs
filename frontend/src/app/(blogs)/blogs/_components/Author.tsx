@@ -1,7 +1,7 @@
-import { PostType } from "@/types/Post";
+import { Post } from "@/types/Post";
 import Avatar from "@/ui/Avatar";
 
-type AuthorType = Pick<PostType["author"], "name" | "avatarUrl">;
+type AuthorType = Pick<Post["author"], "name" | "avatarUrl">;
 
 function Author({ name, avatarUrl }: AuthorType) {
   return (

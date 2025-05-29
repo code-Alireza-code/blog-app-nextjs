@@ -1,4 +1,4 @@
-import { PostType } from "@/types/Post";
+import { Post } from "@/types/Post";
 import http from "./httpService";
 
 export async function getPostBySlug(slug: string) {
@@ -7,7 +7,7 @@ export async function getPostBySlug(slug: string) {
   );
 
   const { data } = await res.json();
-  const { post }: { post: PostType } = data || {};
+  const { post }: { post: Post } = data || {};
 
   return post;
 }
@@ -19,7 +19,7 @@ export async function getAllPosts(q = "", options = {}) {
   );
   const { data } = await res.json();
 
-  const { posts, totalPages }: { posts: PostType[]; totalPages: number } =
+  const { posts, totalPages }: { posts: Post[]; totalPages: number } =
     data || {};
 
   return { posts, totalPages };

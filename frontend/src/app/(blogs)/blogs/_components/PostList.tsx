@@ -3,9 +3,9 @@ import Link from "next/link";
 import { FaRegClock } from "react-icons/fa6";
 import Author from "./Author";
 import PostInteraction from "./PostInteraction";
-import { PostType } from "@/types/Post";
+import { Post } from "@/types/Post";
 
-async function PostList({ posts }: { posts: PostType[] | [] }) {
+async function PostList({ posts }: { posts: Post[] | [] }) {
   if (!posts.length) return null;
 
   return (

@@ -1,4 +1,4 @@
-import { PostType } from "@/types/Post";
+import { Post } from "@/types/Post";
 import Table from "@/ui/Table";
 import toLocaleDateString from "@/utils/dateFormater";
 import { toPersianDigits } from "@/utils/numberFormatter";
@@ -6,7 +6,7 @@ import truncateText from "@/utils/truncateText";
 import { DeletePost, EditPost } from "./Buttons";
 
 type Props = {
-  post: PostType;
+  post: Post;
   index: number;
 };
 
