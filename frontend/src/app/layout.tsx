@@ -19,10 +19,8 @@ export default function RootLayout({
   return (
     <html lang="fa" dir="rtl" className="dark-mode">
       <body className={`antialiased ${vazirFont.variable} font-sans`}>
-        <Providers>
-          <div className="container xl:max-w-screen-xl">{children}</div>
-        </Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
-}
+} 

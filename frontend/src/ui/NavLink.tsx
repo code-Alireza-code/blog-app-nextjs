@@ -12,7 +12,7 @@ function NavLink({ path, children }: NavLinkPropsType) {
   return (
     <Link
       href={path}
-      className={`block py hover:text-secondary-900 transition-all ease-in-out ${
+      className={`block py-2 hover:text-secondary-900 transition-all ease-in-out ${
         path === pathname && "text-primary-900"
       }`}
     >
