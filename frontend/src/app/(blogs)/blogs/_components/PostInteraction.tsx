@@ -46,6 +46,7 @@ function PostInteraction({ post }: PostInteractionProps) {
       </ButtonIcon>
       <ButtonIcon variant="red" onClick={handleLike}>
         {post.isLiked ? <MdFavorite /> : <MdFavoriteBorder />}
+        <span>{toPersianDigits(post.likesCount)}</span>
       </ButtonIcon>
       <ButtonIcon variant="primary" onClick={handleBookmark}>
         {post.isBookmarked ? <MdBookmark /> : <MdBookmarkBorder />}
