@@ -1,4 +1,4 @@
-import { HtmlHTMLAttributes } from "react";
+import { SelectHTMLAttributes } from "react";
 import { FieldErrors } from "react-hook-form";
 
 type OptionsType = {
@@ -13,7 +13,7 @@ type SelectPropsType = {
   options: OptionsType[];
   errors?: FieldErrors | null;
   defaultOption?: boolean;
-} & HtmlHTMLAttributes<HTMLSelectElement>;
+} & SelectHTMLAttributes<HTMLSelectElement>;
 
 function Select({
   name,
