@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import setCookieOnRequest from "@/utils/setCookieOnReq";
 import { getAllPosts } from "@/services/postService";
 import queryString from "query-string";
+import Pagination from "@/ui/Pagination";
 
 type Props = {
   searchParams: Promise<{ search: string }>;
@@ -14,7 +15,7 @@ async function BlogPage({ searchParams }: Props) {
 
   const cookieStore = await cookies();
   const options = setCookieOnRequest(cookieStore);
-  const { posts } = await getAllPosts(searchQuery, options);
+  const { posts, totalPages } = await getAllPosts(searchQuery, options);
 
   return (
     <>
@@ -26,8 +27,9 @@ async function BlogPage({ searchParams }: Props) {
           <span className="font-bold">&quot;{search.search}&qout;</span>
         </p>
       )}
+      {posts.length && <PostList posts={posts} />}
       <div className="flex items-center justify-center">
-        <PostList posts={posts} />
+        <Pagination totalPages={totalPages} />
       </div>
     </>
   );
