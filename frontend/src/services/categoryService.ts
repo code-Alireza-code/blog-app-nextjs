@@ -14,3 +14,13 @@ export async function deleteCategoryApi(categoryId: string) {
     .delete(`/category/remove/${categoryId}`)
     .then(({ data }) => data.data);
 }
+
+type Props = {
+  formData: CreateCategoryFormDataType;
+  categoryId: string;
+};
+export async function editCategoryApi({ formData, categoryId }: Props) {
+  return http
+    .patch(`/category/update/${categoryId}`, formData)
+    .then(({ data }) => data.data);
+}

@@ -7,6 +7,9 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useCreateCategory } from "./useCreateCategory";
 import { useRouter } from "next/navigation";
+import { CategoryType } from "@/types/Category";
+import { useEffect } from "react";
+import { useEditCategory } from "./useEditCategory";
 
 const validationSchema = z.object({
   title: z.string().nonempty("عنوان اجباری است !"),
@@ -19,24 +22,53 @@ const validationSchema = z.object({
 
 export type CreateCategoryFormDataType = z.infer<typeof validationSchema>;
 
-function CreateCategoryForm() {
+type Props = {
+  category?: CategoryType | null;
+  categoryId?: string;
+};
+
+function CreateCategoryForm({ category = null, categoryId }: Props) {
   const {
     register,
     formState: { errors },
     handleSubmit,
+    reset,
   } = useForm<CreateCategoryFormDataType>({
     resolver: zodResolver(validationSchema),
   });
 
+  useEffect(() => {
+    if (category) {
+      reset({
+        title: category.title,
+        englishTitle: category.englishTitle,
+        description: category.description,
+      });
+    }
+  }, [category, reset]);
+
   const router = useRouter();
   const { createCategory, isCreatingCategory } = useCreateCategory();
+  const isEditSession = Boolean(categoryId);
+  const { editCategory, isEditingCategory } = useEditCategory();
 
   const handleSubmitForm = async (formData: CreateCategoryFormDataType) => {
-    await createCategory(formData, {
-      onSuccess: () => {
-        router.push("/profile/categories");
-      },
-    });
+    if (isEditSession) {
+      await editCategory(
+        { formData, categoryId: categoryId as string },
+        {
+          onSuccess: () => {
+            router.push("/profile/categories");
+          },
+        }
+      );
+    } else {
+      await createCategory(formData, {
+        onSuccess: () => {
+          router.push("/profile/categories");
+        },
+      });
+    }
   };
 
   return (
@@ -54,7 +86,13 @@ function CreateCategoryForm() {
         type="submit"
         className="text-white disabled:bg-gray-600"
       >
-        {isCreatingCategory ? "درحال ایجاد دسته بندی" : "ایجاد دسته بندی"}
+        {isEditSession
+          ? isEditingCategory
+            ? "در حال ویرایش دسته بندی"
+            : "ویرایش دسته بندی"
+          : isCreatingCategory
+          ? "درحال ایجاد دسته بندی"
+          : "ایجاد دسته بندی"}
       </Button>
     </form>
   );
