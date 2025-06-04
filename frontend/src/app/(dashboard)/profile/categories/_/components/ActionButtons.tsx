@@ -1,8 +1,14 @@
+"use client";
+
+import Button from "@/ui/Button";
 import ButtonIcon from "@/ui/ButtonIcon";
+import Modal from "@/ui/Modal";
 import Link from "next/link";
+import { useState } from "react";
 import { FaPlus } from "react-icons/fa6";
 import { IoMdTrash } from "react-icons/io";
 import { MdEdit } from "react-icons/md";
+import { useDeleteCategory } from "../../create/_/useDeleteCategory";
 
 export function EditButton({ categoryId }: { categoryId: string }) {
   return (
@@ -20,10 +26,45 @@ type DeleteButtonProps = {
 };
 
 export function DeleteButton({ categoryId, categoryTitle }: DeleteButtonProps) {
+  const [open, setOpen] = useState(false);
+  const { deleteCategory, isDeletingCategory } = useDeleteCategory();
+
+  const handleDelete = async () => {
+    await deleteCategory(categoryId, {
+      onSuccess: () => {
+        setOpen(false);
+      },
+    });
+  };
+
   return (
-    <ButtonIcon variant="outline">
-      <IoMdTrash className="text-error" />
-    </ButtonIcon>
+    <>
+      <ButtonIcon variant="outline" onClick={() => setOpen(true)}>
+        <IoMdTrash
+          className="tex
+        t-error"
+        />
+      </ButtonIcon>
+      <Modal
+        onClose={() => setOpen(false)}
+        open={open}
+        title={`حذف دسته بندی "${categoryTitle}" مطمئن هستید ؟`}
+      >
+        <div className="flex items-center justify-between gap-x-4">
+          <Button
+            disabled={isDeletingCategory}
+            variant="danger"
+            className="grow"
+            onClick={handleDelete}
+          >
+            بله,حذف شود
+          </Button>
+          <Button className="grow" onClick={() => setOpen(false)}>
+            لغو
+          </Button>
+        </div>
+      </Modal>
+    </>
   );
 }
 

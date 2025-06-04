@@ -8,3 +8,9 @@ export async function getAllCategoriesApi() {
 export async function createCategoryApi(formData: CreateCategoryFormDataType) {
   return http.post("/category/add", formData).then(({ data }) => data.data);
 }
+
+export async function deleteCategoryApi(categoryId: string) {
+  return http
+    .delete(`/category/remove/${categoryId}`)
+    .then(({ data }) => data.data);
+}
