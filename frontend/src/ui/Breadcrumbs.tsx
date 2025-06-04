@@ -20,7 +20,11 @@ function BreadCrumbs({ breadcrumbs }: Props) {
               breadcrumb.active ? "text-secondary-800" : "text-secondary-400"
             }`}
           >
-            <Link href={breadcrumb.href}>{breadcrumb.label}</Link>
+            {breadcrumb.active ? (
+              <div>{breadcrumb.label}</div>
+            ) : (
+              <Link href={breadcrumb.href}>{breadcrumb.label}</Link>
+            )}
             {index < breadcrumbs.length - 1 && (
               <span className="inline-block">/</span>
             )}
