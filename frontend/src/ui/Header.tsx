@@ -37,7 +37,7 @@ function Header() {
               );
             })}
           </div>
-          <li className="flex gap-x-8 items-center">
+          <li className="flex gap-x-4 items-center">
             <HeaderButtons />
           </li>
         </ul>

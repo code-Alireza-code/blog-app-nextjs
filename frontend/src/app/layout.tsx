@@ -17,10 +17,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fa" dir="rtl" className="dark-mode">
+    <html lang="fa" dir="rtl">
       <body className={`antialiased ${vazirFont.variable} font-sans`}>
         <Providers>{children}</Providers>
       </body>
     </html>
   );
-} 
+}
