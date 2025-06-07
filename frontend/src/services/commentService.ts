@@ -19,3 +19,9 @@ export async function createCommentApi(
 export async function getAllCommentsApi(options = {}) {
   return http.get("/comment/list", options).then(({ data }) => data.data);
 }
+
+export async function deleteCommentApi(commentId: string) {
+  return http
+    .delete(`/comment/remove/${commentId}`)
+    .then(({ data }) => data.data);
+}

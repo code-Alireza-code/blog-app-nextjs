@@ -25,7 +25,10 @@ function CommentRow({ comment, index }: Props) {
       <td>
         <div className="flex items-center gap-x-3">
           <CommentStatus />
-          <DeleteComment />
+          <DeleteComment
+            commentId={comment._id}
+            commentTitle={comment.content.text}
+          />
         </div>
       </td>
     </Table.row>
