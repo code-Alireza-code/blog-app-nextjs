@@ -2,6 +2,7 @@
 
 import { useGetUser } from "@/hooks/useAuth";
 import NavLink from "./NavLink";
+import HeaderButtons from "./HeaderButtons";
 
 const navLinks = [
   {
@@ -17,7 +18,7 @@ const navLinks = [
 ];
 
 function Header() {
-  const { isLoadingUser, user } = useGetUser();
+  const { isLoadingUser } = useGetUser();
 
   return (
     <header
@@ -36,12 +37,8 @@ function Header() {
               );
             })}
           </div>
-          <li>
-            {user ? (
-              <NavLink path="/profile">پروفایل</NavLink>
-            ) : (
-              <NavLink path="/signin">ورود</NavLink>
-            )}
+          <li className="flex gap-x-8 items-center">
+            <HeaderButtons />
           </li>
         </ul>
       </nav>
