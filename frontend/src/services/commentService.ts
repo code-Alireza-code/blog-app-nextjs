@@ -1,5 +1,6 @@
 import { Comment } from "@/types/Post";
 import http from "./httpService";
+import { updateCommentStatusFormDataType } from "app/(dashboard)/profile/comments/_/components/ActionButtons";
 
 type createCommentFormData = {
   text: string;
@@ -23,5 +24,18 @@ export async function getAllCommentsApi(options = {}) {
 export async function deleteCommentApi(commentId: string) {
   return http
     .delete(`/comment/remove/${commentId}`)
+    .then(({ data }) => data.data);
+}
+
+type updateCommentStatusApiProps = {
+  formData: updateCommentStatusFormDataType;
+  commentId: string;
+};
+export async function updateCommentStatusApi({
+  formData,
+  commentId,
+}: updateCommentStatusApiProps) {
+  return http
+    .patch(`comment/update/${commentId}`, formData)
     .then(({ data }) => data.data);
 }

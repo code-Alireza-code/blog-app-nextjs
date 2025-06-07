@@ -23,6 +23,7 @@ function CommentsTable() {
         <th>پست</th>
         <th>کامنت گذار</th>
         <th>تعداد پاسخ ها به کامنت</th>
+        <th>وضعیت کامنت</th>
         <th>عملیات</th>
       </Table.Header>
       <Table.body>
