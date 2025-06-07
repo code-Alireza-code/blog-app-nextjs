@@ -8,6 +8,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { BackendError } from "@/types/error";
 import { User } from "@/types/User";
+import { adminProfile } from "@/constants/adminData";
 
 export const useSignup = () =>
   useMutation({
@@ -50,8 +51,11 @@ export const useGetUser = () => {
   });
 
   const { user }: { user: User } = data || {};
+  
+  const isAdmin =
+    user && user.email === adminProfile.email && user._id === adminProfile.id;
 
-  return { user, isLoadingUser };
+  return { user, isLoadingUser, isAdmin };
 };
 
 export const useLogoutUser = () => {

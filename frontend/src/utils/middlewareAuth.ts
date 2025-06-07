@@ -1,3 +1,4 @@
+import { adminProfile } from "@/constants/adminData";
 import { User } from "@/types/User";
 import type { NextRequest } from "next/server";
 
@@ -14,5 +15,9 @@ export default async function middlewareAuth(request: NextRequest) {
 
   const { data } = await res.json();
   const { user }: { user: User } = data || {};
-  return user;
+
+  const isAdmin =
+    user && user.email === adminProfile.email && user._id === adminProfile.id;
+
+  return { user, isAdmin };
 }
